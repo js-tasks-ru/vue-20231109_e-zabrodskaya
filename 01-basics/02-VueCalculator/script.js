@@ -15,14 +15,16 @@ const App = defineComponent({
 	},
 	computed: {
 		result() {
-			if (this.input.radio === 'sum') {
-				return this.input.number1 + this.input.number2;
-			} else if (this.input.radio === 'subtract') {
-				return this.input.number1 - this.input.number2;
-			} else if (this.input.radio === 'multiply') {
-				return this.input.number1 * this.input.number2;
-			} else if (this.input.radio === 'divide') {
-				return this.input.number1 / this.input.number2;
+			const {number1, number2, radio} = this.input;
+
+			if (radio === 'sum') {
+				return number1 + number2;
+			} else if (radio === 'subtract') {
+				return number1 - number2;
+			} else if (radio === 'multiply') {
+				return number1 * number2;
+			} else if (radio === 'divide') {
+				return number1 / number2;
 			}
 		},
 	},
