@@ -35,22 +35,19 @@ window.vm = createApp({
 	name: 'App',
 	data() {
 		return {
-			search: 'Elise',
+			search: '',
 			emails,
 		};
 	},
 	computed: {
-		isMarked() {
-			let isMarked;
-			if (this.search !== '') {
-				emails.filter((email) => {
-					if (email.toLowerCase().includes(this.search.toLowerCase())) {
-						isMarked = true;
-						console.log(email);
-						return email;
-					}
-				});
-			}
+		markedList() {
+			return emails.map((email) => {
+				if (this.search !== '' && email.toLowerCase().includes(this.search.toLowerCase())) {
+					return {email: email, isMarked: true};
+				} else {
+					return {email: email, isMarked: false};
+				}
+			});
 		},
 	},
 }).mount('#app');
