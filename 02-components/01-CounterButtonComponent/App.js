@@ -1,30 +1,40 @@
-import { defineComponent } from './vendor/vue.esm-browser.js';
+import {defineComponent} from './vendor/vue.esm-browser.js';
 import CounterButton from './CounterButton.js';
 
 export default defineComponent({
-  name: 'App',
+	name: 'App',
 
-  components: {
-    CounterButton,
-  },
+	components: {
+		CounterButton,
+	},
 
-  data() {
-    return {
-      count: undefined,
-    };
-  },
+	data() {
+		return {
+			count: undefined,
+		};
+	},
 
-  template: `
+	methods: {
+		increase() {
+			if (this.count == undefined) {
+				this.count = 1;
+			} else {
+				this.count += 1;
+			}
+		},
+	},
+
+	template: `
     <div class="sample container">
       <p>count = {{ count }}</p>
       <p>
-        <CounterButton :count="count" @update:count="count = $event" />
+        <CounterButton :count="count" @update:count="increase" />
       </p>
       <p>
-        <CounterButton v-model:count="count" />
+        <CounterButton v-model:count="count" @update:count="increase" />
       </p>
       <p>
-        <CounterButton v-model:count="count" />
+        <CounterButton v-model:count="count" @update:count="increase" />
       </p>
     </div>
   `,
