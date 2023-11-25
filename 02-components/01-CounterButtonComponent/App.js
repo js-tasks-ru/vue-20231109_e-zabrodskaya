@@ -10,31 +10,21 @@ export default defineComponent({
 
 	data() {
 		return {
-			count: undefined,
+			count: 0,
 		};
-	},
-
-	methods: {
-		increase() {
-			if (this.count == undefined) {
-				this.count = 1;
-			} else {
-				this.count += 1;
-			}
-		},
 	},
 
 	template: `
     <div class="sample container">
       <p>count = {{ count }}</p>
       <p>
-        <CounterButton :count="count" @update:count="increase" />
+        <CounterButton :count="count" @update:count="count" />
       </p>
       <p>
-        <CounterButton v-model:count="count" @update:count="increase" />
+        <CounterButton v-model:count="count" @update:count="count" />
       </p>
       <p>
-        <CounterButton v-model:count="count" @update:count="increase" />
+        <CounterButton v-model:count="count" @update:count="count" />
       </p>
     </div>
   `,
