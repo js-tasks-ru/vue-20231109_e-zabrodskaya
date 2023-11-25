@@ -73,7 +73,7 @@ export default defineComponent({
       </UiContainer>
 
       <UiContainer v-if="state === $options.States.ERROR">
-        <UiAlert>{{error}}</UiAlert>
+        <UiAlert>{{ error }}</UiAlert>
       </UiContainer>
 
     </div>`,
