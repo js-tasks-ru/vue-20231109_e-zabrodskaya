@@ -9,5 +9,5 @@ export default defineComponent({
 		},
 	},
 
-	template: `<p class="meetup-description">{{description}}</p>`,
+	template: `<p class="meetup-description">{{ description }}</p>`,
 });

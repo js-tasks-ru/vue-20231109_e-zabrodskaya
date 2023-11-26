@@ -17,17 +17,17 @@ export default defineComponent({
 	template: `
     <div class="agenda-item">
       <div class="agenda-item__col" >
-        <img :src="\`/assets/icons/icon-\${$options.agendaItemIcons[this.agendaItem.type]}.svg\`" class="icon" :alt="this.agendaItem.type" />
+        <img :src="\`/assets/icons/icon-\${$options.agendaItemIcons[agendaItem.type]}.svg\`" class="icon" :alt="this.agendaItem.type" />
       </div>
-      <div class="agenda-item__col">{{this.agendaItem.startsAt + ' - ' + this.agendaItem.endsAt}}</div>
+      <div class="agenda-item__col">{{ agendaItem.startsAt + ' - ' + agendaItem.endsAt }}</div>
       <div class="agenda-item__col">
-        <h3 class="agenda-item__title">{{this.agendaItem.title ? this.agendaItem.title : $options.agendaItemDefaultTitles[this.agendaItem.type]}}</h3>
+        <h3 class="agenda-item__title">{{ agendaItem.title ? agendaItem.title : $options.agendaItemDefaultTitles[agendaItem.type] }}</h3>
         <p v-if="this.agendaItem.type === 'talk'" class="agenda-item__talk">
-          <span>{{this.agendaItem.speaker}}</span>
+          <span>{{ agendaItem.speaker }}</span>
           <span class="agenda-item__dot"></span>
-          <span class="agenda-item__lang">{{this.agendaItem.language}}</span>
+          <span class="agenda-item__lang">{{ agendaItem.language }}</span>
         </p>
-        <p v-if="this.agendaItem.description">{{this.agendaItem.description}}</p>
+        <p v-if="this.agendaItem.description">{{ agendaItem.description }}</p>
       </div>
     </div>`,
 });

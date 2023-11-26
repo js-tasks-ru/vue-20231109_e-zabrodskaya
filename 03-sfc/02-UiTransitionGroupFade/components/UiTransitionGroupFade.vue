@@ -20,27 +20,27 @@ export default {
 <style scoped>
 /* _transitions.css */
 
-.fade-list :deep(.meetups-list__item) {
+.fade-list :deep(li) {
   position: relative;
 }
 
-.fade-list :deep(.meetups-list__item) {
+.fade-list :deep(li) {
   opacity: 1;
   transition: opacity 0.3s ease-out;
 }
 
-.fade-list :deep(.meetups-list__item).fade-list-leave-active  {
+.fade-list :deep(li).fade-list-leave-active  {
   position: absolute !important;
   left: 0;
   right: 0;
 }
 
-.fade-list :deep(.meetups-list__item).fade-list-enter-from,
-.fade-list :deep(.meetups-list__item).fade-list-leave-to {
+.fade-list :deep(li).fade-list-enter-from,
+.fade-list :deep(li).fade-list-leave-to {
   opacity: 0;
 }
 
-.fade-list :deep(.meetups-list__item).fade-list-move {
+.fade-list :deep(li).fade-list-move {
   transition: transform 0.3s;
 }
 </style>

@@ -29,21 +29,21 @@ export default defineComponent({
 
 	template: `
     <div>
-      <MeetupCover :title="this.meetup.title" :image="this.meetup.image"/>
+      <MeetupCover :title="meetup.title" :image="meetup.image"/>
 
       <UiContainer>
         <div class="meetup">
           <div class="meetup__content">
             <h3>Описание</h3>
-            <MeetupDescription :description="this.meetup.description"/>
+            <MeetupDescription :description="meetup.description"/>
             <h3>Программа</h3>
-            <MeetupAgenda v-if="this.meetup.agenda.length !== 0" :agenda="this.meetup.agenda"/>
-            <UiAlert v-else-if="this.meetup.agenda.length == 0">Программа пока пуста...</UiAlert>
+            <MeetupAgenda v-if="meetup.agenda.length !== 0" :agenda="meetup.agenda"/>
+            <UiAlert v-else-if="meetup.agenda.length == 0">Программа пока пуста...</UiAlert>
           </div>
           <div class="meetup__aside">
-            <MeetupInfo :organizer="this.meetup.organizer"
-        :place="this.meetup.place"
-        :date="this.meetup.date"/>
+            <MeetupInfo :organizer="meetup.organizer"
+        :place="meetup.place"
+        :date="meetup.date"/>
           </div>
         </div>
       </UiContainer>

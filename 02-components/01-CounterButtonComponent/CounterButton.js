@@ -18,5 +18,5 @@ export default defineComponent({
 		},
 	},
 
-	template: `<button type="button" @click="update(count)">{{count}}</button>`,
+	template: `<button type="button" @click="update(count)">{{ count }}</button>`,
 });
