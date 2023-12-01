@@ -1,17 +1,17 @@
-import { defineComponent } from './vendor/vue.esm-browser.js';
+import {defineComponent} from './vendor/vue.esm-browser.js';
 import PageMeetup from './components/PageMeetup.js';
 
 export default defineComponent({
-  name: 'App',
+	name: 'App',
 
-  components: { PageMeetup },
-  data() {
-    return {
-      meetupId: 1,
-    };
-  },
+	components: {PageMeetup},
+	data() {
+		return {
+			meetupId: 1,
+		};
+	},
 
-  template: `
+	template: `
     <div class="sample">
       <div class="container">
         <p>
