@@ -1,18 +1,14 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <UiIcon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="{'dropdown_opened' : isOpened}">
+    <button @click="toggleList" type="button" class="dropdown__toggle" :class="{'dropdown__toggle_icon' : isIcons}">
+      <UiIcon :icon="choosenOption ? choosenOption.icon : ''" class="dropdown__icon" />
+      <span>{{ choosenOption ?  choosenOption.text : title }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <UiIcon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <UiIcon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div v-show="isOpened" class="dropdown__menu" role="listbox">
+      <button v-for="option in options" @click="update(modelValue)" class="dropdown__item" :class="{'dropdown__item_icon' : isIcons}" role="option" type="button" :value="option.value">
+        <UiIcon :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
   </div>
@@ -25,6 +21,52 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+
+  props: {
+    options: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
+    modelValue: {
+      type: String,
+    },
+    title:  {
+      type: String,
+      required: true
+    }
+  },
+
+  emits: ['onUpdate(modelValue)'],
+
+  data() {
+    return {
+      isOpened: false,
+    }
+  },
+
+  computed: {
+    isIcons() {
+      return this.options.filter(option => option.icon).length > 0 ? true : false
+    },
+    choosenOption() {
+      if (this.modelValue) {
+        let choosenOption = this.options.find(option => option.value === this.modelValue)
+        return choosenOption
+      }
+    }
+  },
+
+  methods: {
+    toggleList() {
+      this.isOpened = !this.isOpened
+    },
+    update(modelValue) {
+      modelValue = this.options.find(option => option.value === event.target.value).value
+      this.$emit('update:modelValue', modelValue);
+      this.isOpened = false
+    }
+  }
 };
 </script>
 

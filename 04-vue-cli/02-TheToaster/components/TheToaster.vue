@@ -1,13 +1,10 @@
 <template>
-  <div class="toasts">
-    <div class="toast toast_success">
-      <UiIcon class="toast__icon" icon="check-circle" />
-      <span>Success Toast Example</span>
-    </div>
-
-    <div class="toast toast_error">
-      <UiIcon class="toast__icon" icon="alert-circle" />
-      <span>Error Toast Example</span>
+  <div class="toasts" >
+    <div v-for="toast in toastsArray">
+      <div class="toast" :class="`toast_${toast.toastType.status}`">
+          <UiIcon class="toast__icon" :icon="toast.toastType.icon" />
+          <span>{{ toast.message }}</span>
+        </div>
     </div>
   </div>
 </template>
@@ -15,10 +12,63 @@
 <script>
 import UiIcon from './UiIcon.vue';
 
+
+const toastTypes = {
+  error: {
+    status: 'error',
+    icon: 'alert-circle'
+  },
+  success: {
+    status: 'success',
+    icon: 'check-circle'
+  }
+}
+
 export default {
   name: 'TheToaster',
 
   components: { UiIcon },
+
+  data() {
+    return {
+      toastsArray: [],
+      toast: {
+        message: '',
+        toastType: {
+          status: '',
+          icon: 'alert-circle'
+        }
+      }
+    }
+  },
+
+  toastTypes,
+
+  methods: {
+    deleteElem(time) {
+      setTimeout(() => {
+        this.toastsArray.splice(0, 1)
+      }, time)
+    },
+
+    error(message) {
+      this.toast = {
+        toastType: toastTypes.error,
+        message: message
+      }
+      this.toastsArray.push(this.toast);
+      this.deleteElem(5000)
+    },
+
+    success(message) {
+      this.toast = {
+        toastType: toastTypes.success,
+        message: message
+      }
+      this.toastsArray.push(this.toast);
+      this.deleteElem(5000)
+    }
+  }
 };
 </script>
 

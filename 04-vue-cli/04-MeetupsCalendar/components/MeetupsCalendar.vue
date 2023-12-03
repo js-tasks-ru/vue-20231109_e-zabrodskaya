@@ -2,13 +2,20 @@
   <div class="calendar-view">
     <div class="calendar-view__controls">
       <div class="calendar-view__controls-inner">
-        <button class="calendar-view__control-left" type="button" aria-label="Previous month"></button>
-        <div class="calendar-view__date">Декабрь 2022 г.</div>
-        <button class="calendar-view__control-right" type="button" aria-label="Next month"></button>
+        <button class="calendar-view__control-left" type="button" @click="() => newMonth('prev')" aria-label="Previous month"></button>
+        <div class="calendar-view__date">{{ actualMonth }}</div>
+        <button class="calendar-view__control-right" type="button" @click="() => newMonth('next')" aria-label="Next month"></button>
       </div>
     </div>
 
     <div class="calendar-view__grid">
+      <div v-for="day in allDays" class="calendar-view__cell" :class="{'calendar-view__cell_inactive' : !day.currentMonth}">
+        <div class="calendar-view__cell-day">{{ day.date }}</div>
+        <div class="calendar-view__cell-content"></div>
+      </div>
+    </div>
+
+    <!-- <div class="calendar-view__grid">
       <div class="calendar-view__cell calendar-view__cell_inactive" tabindex="0">
         <div class="calendar-view__cell-day">28</div>
         <div class="calendar-view__cell-content"></div>
@@ -37,7 +44,7 @@
         <div class="calendar-view__cell-day">4</div>
         <div class="calendar-view__cell-content"></div>
       </div>
-      <!-- -->
+
       <div class="calendar-view__cell" tabindex="0">
         <div class="calendar-view__cell-day">5</div>
         <div class="calendar-view__cell-content"></div>
@@ -66,7 +73,7 @@
         <div class="calendar-view__cell-day">11</div>
         <div class="calendar-view__cell-content"></div>
       </div>
-      <!-- -->
+
       <div class="calendar-view__cell" tabindex="0">
         <div class="calendar-view__cell-day">12</div>
         <div class="calendar-view__cell-content">
@@ -98,7 +105,7 @@
         <div class="calendar-view__cell-day">18</div>
         <div class="calendar-view__cell-content"></div>
       </div>
-      <!-- -->
+
       <div class="calendar-view__cell" tabindex="0">
         <div class="calendar-view__cell-day">19</div>
         <div class="calendar-view__cell-content"></div>
@@ -127,7 +134,7 @@
         <div class="calendar-view__cell-day">25</div>
         <div class="calendar-view__cell-content"></div>
       </div>
-      <!-- -->
+
       <div class="calendar-view__cell" tabindex="0">
         <div class="calendar-view__cell-day">26</div>
         <div class="calendar-view__cell-content"></div>
@@ -156,7 +163,7 @@
         <div class="calendar-view__cell-day">1</div>
         <div class="calendar-view__cell-content"></div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -170,6 +177,56 @@ export default {
       required: true,
     },
   },
+
+  data() {
+    return {
+      date: new Date(),
+      days: []
+    }
+  },
+
+  computed: {
+    actualMonth() {
+      return  this.date.toLocaleDateString(navigator.language, {
+        month: 'long',
+        year: 'numeric',
+      });
+    },
+    firstDayInMonth() {
+      const day =  new Date(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
+      return day;
+    },
+
+    allDays() {
+      this.days = [];
+      const fullArrayPrev = []
+      const daysPrev = 33 - new Date((this.date.getFullYear() - 1), (this.date.getMonth() - 1), 33).getDate();
+      for (let i = 0; i <= daysPrev; i++) {
+        fullArrayPrev[i] = {date: i, currentMonth: false}
+      }
+      let arrayPrev = fullArrayPrev.splice(-this.firstDayInMonth)
+      this.days.push(...arrayPrev)
+
+      for (let i = this.firstDayInMonth; i < this.daysInMonth() + this.firstDayInMonth; i++) {
+        this.days[i] = {date: i+ 1 - this.firstDayInMonth, currentMonth: true}
+      }
+      return this.days;
+    }
+  },
+
+  methods: {
+    newMonth(value) {
+      const month = this.date.getMonth();
+      if (value === 'prev') {
+        this.date = new Date(this.date.setMonth(month - 1))
+      } else if (value === 'next') {
+        this.date = new Date(this.date.setMonth(month + 1))
+      }
+    },
+    daysInMonth() {
+      return 33 - new Date(this.date.getFullYear(), this.date.getMonth(), 33).getDate();
+    }
+  }
 };
 </script>
 
