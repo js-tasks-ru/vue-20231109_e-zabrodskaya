@@ -1,14 +1,17 @@
 <template>
   <h1 class="logo">
-    <a href="/" class="logo__link"
+    <RouterLink :to="{name: 'index'}" class="logo__link"
       ><img src="@/assets/logo.svg" alt="Meetups" class="logo__image" width="174" height="30"
-    /></a>
+    /></RouterLink>
   </h1>
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
-  name: 'MeetupsLogo',
+    name: 'MeetupsLogo',
+    components: { RouterLink }
 };
 </script>
 

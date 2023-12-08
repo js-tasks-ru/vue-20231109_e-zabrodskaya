@@ -1,13 +1,16 @@
 <template>
   <nav class="nav">
-    <a href="/login" class="nav__link">Вход</a>
-    <a href="/register" class="nav__link">Регистрация</a>
+    <RouterLink :to="{name: 'login'}" class="nav__link">Вход</RouterLink>
+    <RouterLink :to="{name: 'register'}" class="nav__link">Регистрация</RouterLink>
   </nav>
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
-  name: 'MeetupsNav',
+    name: 'MeetupsNav',
+    components: { RouterLink }
 };
 </script>
 
