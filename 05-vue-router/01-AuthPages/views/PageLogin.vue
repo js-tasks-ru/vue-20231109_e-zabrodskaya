@@ -38,7 +38,7 @@ export default {
 
   methods: {
     handleSubmit() {
-      let query = this.$router.currentRoute.value.query.from
+      let query = this.$route.query.from
       if (query) {
         this.$router.push(query)
       } else {

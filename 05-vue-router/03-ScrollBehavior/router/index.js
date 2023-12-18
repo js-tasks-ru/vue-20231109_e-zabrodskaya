@@ -42,7 +42,7 @@ export const router = createRouter({
 		},
 	],
 	scrollBehavior(to, from, savedPosition) {
-		if (from.meta.saveScrollPosition && to.meta.saveScrollPosition) {
+		if (from.meta.saveScrollPosition == true && to.meta.saveScrollPosition == true) {
 			let top = document.scrollTop;
 			return {top: top};
 		} else if (to.hash) {

@@ -1,13 +1,13 @@
 <template>
   <div class="dropdown" :class="{'dropdown_opened' : isOpened}">
     <button @click="toggleList" type="button" class="dropdown__toggle" :class="{'dropdown__toggle_icon' : isIcons}">
-      <UiIcon :icon="choosenOption ? choosenOption.icon : ''" class="dropdown__icon" />
+      <UiIcon v-if="choosenOption" :icon="choosenOption.icon" class="dropdown__icon" />
       <span>{{ choosenOption ?  choosenOption.text : title }}</span>
     </button>
 
     <div v-show="isOpened" class="dropdown__menu" role="listbox">
-      <button v-for="option in options" @click="update(modelValue)" class="dropdown__item" :class="{'dropdown__item_icon' : isIcons}" role="option" type="button" :value="option.value">
-        <UiIcon :icon="option.icon" class="dropdown__icon" />
+      <button v-for="option in options" @click="update(option)" class="dropdown__item" :class="{'dropdown__item_icon' : isIcons}" role="option" type="button">
+        <UiIcon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
         {{ option.text }}
       </button>
     </div>
@@ -37,7 +37,7 @@ export default {
     }
   },
 
-  emits: ['onUpdate(modelValue)'],
+  emits: ['update:modelValue'],
 
   data() {
     return {
@@ -47,7 +47,7 @@ export default {
 
   computed: {
     isIcons() {
-      return this.options.filter(option => option.icon).length > 0 ? true : false
+      return this.options.some(option => option.icon)
     },
     choosenOption() {
       if (this.modelValue) {
@@ -61,9 +61,8 @@ export default {
     toggleList() {
       this.isOpened = !this.isOpened
     },
-    update(modelValue) {
-      modelValue = this.options.find(option => option.value === event.target.value).value
-      this.$emit('update:modelValue', modelValue);
+    update(option) {
+      this.$emit('update:modelValue', option.value);
       this.isOpened = false
     }
   }

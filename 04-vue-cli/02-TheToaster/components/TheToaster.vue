@@ -1,10 +1,8 @@
 <template>
-  <div class="toasts" >
-    <div v-for="toast in toastsArray">
-      <div class="toast" :class="`toast_${toast.toastType.status}`">
-          <UiIcon class="toast__icon" :icon="toast.toastType.icon" />
-          <span>{{ toast.message }}</span>
-        </div>
+  <div class="toasts">
+    <div v-for="toast in toastsArray" class="toast" :class="`toast_${toast.toastType.status}`">
+      <UiIcon class="toast__icon" :icon="toast.toastType.icon" />
+      <span>{{ toast.message }}</span>
     </div>
   </div>
 </template>
@@ -52,20 +50,20 @@ export default {
     },
 
     error(message) {
-      this.toast = {
+      const item = {
         toastType: toastTypes.error,
         message: message
       }
-      this.toastsArray.push(this.toast);
+      this.toastsArray.push(item);
       this.deleteElem(5000)
     },
 
     success(message) {
-      this.toast = {
+      const item = {
         toastType: toastTypes.success,
         message: message
       }
-      this.toastsArray.push(this.toast);
+      this.toastsArray.push(item);
       this.deleteElem(5000)
     }
   }
