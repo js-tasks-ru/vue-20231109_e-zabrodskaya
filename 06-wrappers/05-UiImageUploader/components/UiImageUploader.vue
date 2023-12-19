@@ -1,15 +1,87 @@
 <template>
   <div class="image-uploader">
-    <label class="image-uploader__preview image-uploader__preview-loading" style="--bg-url: url('/link.jpeg')">
-      <span class="image-uploader__text">Загрузить изображение</span>
-      <input type="file" accept="image/*" class="image-uploader__input" />
+    <label class="image-uploader__preview"
+      :class="{'image-uploader__preview-loading' : state === $options.States.LOADING}"
+      :style="currentImage && `--bg-url: url(${currentImage})`">
+      <span class="image-uploader__text">{{ text }}</span>
+      <input type="file" v-bind="$attrs" ref="input"
+      accept="image/*" class="image-uploader__input"
+      @change="updateImage" @click="removeImage"/>
     </label>
   </div>
 </template>
 
 <script>
+const States = {
+  EMPTY: 'EMPTY',
+  LOADING: 'LOADING',
+  DONE: 'DONE'
+}
+
 export default {
   name: 'UiImageUploader',
+  inheritAttrs: false,
+  States,
+  props: {
+    preview: {
+      type: String
+    },
+    uploader: {
+      type: Function
+    }
+  },
+  emits: ['select', 'upload', 'error', 'remove'],
+  data() {
+    return {
+      currentImage: this.preview,
+      state: this.preview ? States.DONE : States.EMPTY
+    }
+  },
+  computed: {
+    text() {
+      if (this.state === 'EMPTY') {
+        return 'Загрузить изображение'
+      } else if (this.state === 'LOADING') {
+        return 'Загрузка...'
+      } else {
+        return 'Удалить изображение'
+      }
+    }
+  },
+  methods: {
+    updateImage() {
+      const src = URL.createObjectURL(event.target.files[0])
+      this.currentImage = src
+      if (event.target.files[0]) {
+        this.state = States.DONE
+      }
+
+      if (this.uploader) {
+        this.state = States.LOADING
+        this.uploader(event.target.files[0])
+        .then(response => {
+          this.$emit('upload', response)
+          this.state = States.DONE
+        }).catch(error => {
+          this.state = States.EMPTY
+          this.removeImage()
+          this.$emit('error', error);
+        })
+      }
+      this.$emit('select', event.target.files[0]);
+    },
+    removeImage() {
+      if (this.state === States.DONE || this.state === States.LOADING) {
+        event.preventDefault()
+      }
+      if (this.currentImage && (this.state === States.DONE || this.state === States.EMPTY)) {
+        this.$refs['input'].value = ''
+        this.currentImage = null
+        this.$emit('remove', this.currentImage);
+        this.state = States.EMPTY
+      }
+    }
+  }
 };
 </script>
 
